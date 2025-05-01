@@ -1,7 +1,0 @@
-# รีสตาร์ท Colima แบบสมบูรณ์  llm
-colima stop
-colima start --cpu 4 --memory 8 --disk 100 --vm-type=vz --mount-type=virtiofs --arch aarch64
-
-# ตรวจสอบสถานะ Docker socket
-ls -la ~/.colima/default/docker.sock
-docker context use colima

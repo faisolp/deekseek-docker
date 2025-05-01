@@ -1,9 +1,10 @@
-# docker-compose.yml สำหรับใช้ DeepSeek-R1-Distill-Qwen-14B บน MacBook Pro M4 + Colima
+# docker-compose.yml สำหรับใช้ DeepSeek-R1 บน MacBook Pro + Colima
+# ใช้ .env file สำหรับกำหนดค่าตัวแปร
 services:
   # Ollama สำหรับรัน DeepSeek-R1
   ollama:
     image: ollama/ollama:latest
-    platform: linux/arm64  # สำหรับ M4 chip
+    platform: linux/arm64  # สำหรับ Apple Silicon
     container_name: ollama-service
     volumes:
       - ./ollama:/root/.ollama
@@ -14,13 +15,13 @@ services:
     environment:
       - OLLAMA_HOST=0.0.0.0
       - OLLAMA_ORIGINS=*
-      - GPU_LAYERS=40    # เพิ่มจำนวน GPU layers สำหรับ deepseek-r1
+      - GPU_LAYERS=${OLLAMA_GPU_LAYERS}
       - METAL=1          # เปิดใช้งาน Metal (GPU)
     deploy:
       resources:
         limits:
-          memory: 13G    # เพิ่ม RAM เป็น 13GB สำหรับโมเดลใหม่
-          cpus: '6'      # ใช้ 6 cores
+          memory: ${OLLAMA_MEMORY}
+          cpus: '${OLLAMA_CPU}'
     networks:
       - llm-network
     restart: unless-stopped
@@ -32,19 +33,19 @@ services:
     volumes:
       - ./openwebui/data:/app/backend/data
     ports:
-      - "3000:8080"
+      - "${WEBUI_PORT}:8080"
     environment:
       - OLLAMA_API_BASE_URL=http://ollama-service:11434
       - WEBUI_AUTH=true
       - WEBUI_ENDPOINT_OLLAMA=true
       - WEBUI_ENDPOINT_LOCAL=false
-      - WEBUI_USER=admin
-      - WEBUI_PASS=adminpass
+      - WEBUI_USER=${WEBUI_USER}
+      - WEBUI_PASS=${WEBUI_PASS}
     deploy:
       resources:
         limits:
-          memory: 2G
-          cpus: '1'
+          memory: ${WEBUI_MEMORY}
+          cpus: '${WEBUI_CPU}'
     depends_on:
       - ollama
     restart: unless-stopped
