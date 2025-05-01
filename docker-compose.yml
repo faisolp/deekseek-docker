@@ -1,0 +1,56 @@
+# docker-compose.yml สำหรับใช้ Deepseek R1 บน MacBook Pro M4 + Colima
+services:
+  # Ollama สำหรับรัน Deepseek R1
+  ollama:
+    image: ollama/ollama:latest
+    platform: linux/arm64  # สำหรับ M4 chip
+    container_name: ollama-service
+    volumes:
+      - ./ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # สำหรับ Colima
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_ORIGINS=*
+      - GPU_LAYERS=40    # เพิ่มจำนวน GPU layers สำหรับ deepseek-v1
+      - METAL=1          # เปิดใช้งาน Metal (GPU)
+    deploy:
+      resources:
+        limits:
+          memory: 6G    # เพิ่ม RAM เป็น 13GB สำหรับโมเดลใหม่
+          cpus: '3'      # ใช้ 6 cores
+    networks:
+      - llm-network
+    restart: unless-stopped
+
+  # OpenWebUI - Web Interface
+  webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: openwebui
+    volumes:
+      - ./openwebui/data:/app/backend/data
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_API_BASE_URL=http://ollama-service:11434
+      - WEBUI_AUTH=true
+      - WEBUI_ENDPOINT_OLLAMA=true
+      - WEBUI_ENDPOINT_LOCAL=false
+      - WEBUI_USER=admin
+      - WEBUI_PASS=adminpass
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1'
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    networks:
+      - llm-network
+
+networks:
+  llm-network:
+    driver: bridge
