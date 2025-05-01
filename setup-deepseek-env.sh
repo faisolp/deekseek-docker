@@ -89,7 +89,7 @@ if [ $? -eq 0 ]; then
   
   # สร้างโมเดลที่ปรับแต่งแล้วสำหรับภาษาไทย
   echo -e "${BLUE}🔧 กำลังสร้างโมเดลที่ปรับแต่งแล้ว (${MODEL_ALIAS})...${NC}"
-  docker cp models/Modelfile.deepseek-r1 ollama-service:/tmp/Modelfile
+  docker cp models/Modelfile.deepseek ollama-service:/tmp/Modelfile
   docker exec -it ollama-service ollama create ${MODEL_ALIAS} -f /tmp/Modelfile
   
   if [ $? -eq 0 ]; then

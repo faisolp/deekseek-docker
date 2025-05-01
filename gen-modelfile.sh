@@ -10,7 +10,7 @@ source .env
 mkdir -p models
 
 # สร้าง Modelfile ตามค่าที่กำหนดใน .env
-cat > models/Modelfile.deepseek-r1 << EOL
+cat > models/Modelfile.deepseek << EOL
 FROM ${MODEL_NAME}
 PARAMETER temperature ${MODEL_TEMPERATURE}
 PARAMETER top_p ${MODEL_TOP_P}
