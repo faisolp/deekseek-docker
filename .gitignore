@@ -1,0 +1,24 @@
+# ไฟล์และโฟลเดอร์ที่ไม่ต้องการให้ Git ติดตาม
+
+# โฟลเดอร์ข้อมูล Ollama
+ollama/
+
+# โฟลเดอร์ข้อมูล OpenWebUI
+openwebui/
+
+# ไฟล์ log
+*.log
+
+# ไฟล์ macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ไฟล์ชั่วคราว
+*.tmp
+*.bak
+*.swp
+
+# ไฟล์ Visual Studio Code
+.vscode/
+.idea/
