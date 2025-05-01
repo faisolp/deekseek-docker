@@ -1,6 +1,6 @@
-# DeepSeek-R1-Thai 🤖 - รองรับการปรับแต่งผ่าน .env
+# DeepSeek-V2-Thai 🤖 - รองรับการปรับแต่งผ่าน .env
 
-ระบบ AI ภาษาไทยด้วย DeepSeek-R1 บน MacBook M-series ที่ปรับแต่งได้ง่ายผ่าน Environment Variables
+ระบบ AI ภาษาไทยด้วย DeepSeek-V2 16B บน MacBook M-series ที่ปรับแต่งได้ง่ายผ่าน Environment Variables
 
 ![DeepSeek-R1 Logo](https://img.shields.io/badge/DeepSeek--R1-Thai-brightgreen?style=for-the-badge)
 
@@ -88,12 +88,12 @@ docker-compose up -d ollama
 
 ```bash
 # กำหนดรุ่นของโมเดล และชื่อ
-MODEL_NAME=deepseek-r1:8b
-MODEL_ALIAS=deepseek-r1-thai
+MODEL_NAME=deepseek-v2:16b
+MODEL_ALIAS=deepseek-v2-thai
 
 # ทรัพยากรสำหรับ Ollama
 OLLAMA_CPU=3.5
-OLLAMA_MEMORY=8G
+OLLAMA_MEMORY=14G
 OLLAMA_GPU_LAYERS=40
 
 # ค่า parameters สำหรับโมเดล
@@ -102,9 +102,9 @@ MODEL_TOP_P=0.9
 MODEL_TOP_K=40
 
 # ตัวอย่างสำหรับโมเดลอื่นๆ
-# MODEL_NAME=deepseek-r1:14b
-# OLLAMA_MEMORY=13G
-# COLIMA_MEMORY=15
+# MODEL_NAME=deepseek-r1:8b
+# OLLAMA_MEMORY=8G
+# COLIMA_MEMORY=10
 ```
 
 ดูรายละเอียดทั้งหมดได้ในไฟล์ `example.env`
@@ -139,6 +139,7 @@ MODEL_TOP_K=40
 
 ## 📚 โมเดลที่แนะนำ
 
+- **deepseek-v2:16b** - โมเดลใหม่ล่าสุด ความสามารถสูงมาก เหมาะกับงานซับซ้อน
 - **deepseek-r1:8b** - เวอร์ชันทั่วไป ต้องการทรัพยากรน้อย
 - **deepseek-r1:14b** - เวอร์ชันใหญ่กว่า ความสามารถสูงกว่า แต่ต้องการ RAM มากกว่า
 - **deepseek-coder** - เน้นเขียนโค้ด ต้องการทรัพยากรน้อย
